@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react';
+import { Title } from './App.styled';
+import Container from './components/Container/Container';
+import ItemGrid from './components/ItemGrid/ItemGrid';
+import LoadMore from './components/LoadMore/LoadMore';
+import useItems from './hooks/useItems';
 
-function App() {
+const ITEMS_PER_PAGE = 10;
+
+const App = () => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const { items, fetchItems, isLastItem } = useItems(ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    fetchItems(currentPage);
+  }, [currentPage]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Title>Technical Assignment</Title>
+      <ItemGrid items={items} />
+      {!isLastItem && (
+        <LoadMore onPageChange={() => setCurrentPage(currentPage + 1)} />
+      )}
+    </Container>
   );
-}
+};
 
 export default App;
