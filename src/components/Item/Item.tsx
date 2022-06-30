@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { ItemType } from '../../types';
 import ItemModal from '../ItemModal/ItemModal';
 import { StyledItem } from './Item.styled';
@@ -13,7 +14,7 @@ const Item: React.FC<Props> = ({ item }) => {
   return (
     <StyledItem
       onClick={() => {
-        setDropdown(!dropdown);
+        setDropdown(true);
       }}
     >
       {item.title}
